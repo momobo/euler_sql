@@ -214,12 +214,13 @@ There exists exactly one Pythagorean triplet for which a + b + c = 1000.
 Find the product abc.
 */
 
-select  distinct(a*b*c)
+select distinct a*b*(1000-a-b)
 from 
-(select seq4()+1 as a from table(generator(rowcount => 1e6)) where  a < 1000)  A
-cross join (select seq4()+1 as b from table(generator(rowcount => 1e6)) where  b < 1000)  B
-cross join (select seq4()+1 as c from table(generator(rowcount => 1e6)) where  c < 1000)  C
-where a+b+c = 1000 and a*a + b*b = c*c;
+(select seq4()+1 as a from table(generator(rowcount => 1e6)) where  a < 500)  A
+cross join (select seq4()+1 as b from table(generator(rowcount => 1e6)) where  b < 500)  B
+where a < b 
+  and (1000-a-b) > b
+  and a*a + b*b = (1000-a-b)*(1000-a-b);
 
 --------------------------------------------------------------------------------------------------------------
 -- Euler 10
